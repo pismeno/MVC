@@ -31,6 +31,7 @@ function replace_keys(string $viewFilename) : string
             'TITLE' => get_the_title(),
             'TITLE_ATTRIBUTE' => the_title_attribute(['echo' => false]),
             'PERMALINK' => get_permalink(),
+            'THUMBNAIL' => get_the_post_thumbnail(),
             'CONTENT' => get_the_content(),
             'AUTHOR' => get_the_author(),
             'DATE' => get_the_date(),
@@ -58,3 +59,4 @@ function enqueue_styles() {
 }
 
 //add_action( 'wp_enqueue_scripts', 'enqueue_styles' );
+add_theme_support( 'post-thumbnails' );
