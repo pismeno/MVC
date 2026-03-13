@@ -2,19 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     {{ WP_HEAD }}
 </head>
 <body>
-<div class='{{ CLASS }}'>
-    <h2>
-        <a href='{{ PERMALINK }}' rel='bookmark' title='Permanent Link to "{{ TITLE_ATTRIBUTE }}"'>{{ TITLE }}</a>
-    </h2>
-    <small>{{ TIME }} by {{ AUTHOR_POSTS_LINK }}</small>
-    <div>{{ THUMBNAIL }}</div>
-    <div class='entry'>{{ CONTENT }}</div>
-    <p class='postmetadata'>Posted in {{ CATEGORIES }}</p>
+<div class="container">
+    <h1>My Blog</h1>
+    {{ POST_LOOP }}
+    {{ PAGINATION }}
 </div>
 {{ WP_FOOTER }}
 </body>
