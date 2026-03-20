@@ -1,2 +1,2 @@
 <?php
-the_view('views/home.html');
+the_view('views/cars.html');
