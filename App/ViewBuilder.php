@@ -2,7 +2,7 @@
 namespace App;
 class ViewBuilder
 {
-    private static array $TWO_PART_TAGS = ['POSTS:START', 'POSTS:END'];
+    private static array $TWO_PART_TAGS = ['POSTS'];
 
     private string $bladePath;
     private string $blade;
@@ -13,8 +13,6 @@ class ViewBuilder
     public function __construct(string $bladePath)
     {
         $this->globalTags = [
-            'WP_HEAD' => self::ob_action('wp_head'),
-            'WP_FOOTER' => self::ob_action('wp_footer'),
             'PAGINATION' => get_the_posts_pagination(),
         ];
 
@@ -24,17 +22,24 @@ class ViewBuilder
 
     protected function get_the_blade() : string
     {
-        return file_get_contents(get_template_directory() . '/views/' . $this->bladePath);
+        return file_get_contents(THEME_RESOURCES_PATH . $this->bladePath);
     }
     public function build() : string
     {
         $bladeLength = strlen($this->blade);
-
         $view = '';
+
         while ($this->cursor < $bladeLength) {
             $view .= $this->next_key();
         }
         $view .= $this->rest_of_blade();
+
+        $wp_head_html = self::ob_action('wp_head');
+        $wp_footer_html = self::ob_action('wp_footer');
+
+        $view = str_replace('{{ WP_HEAD }}', $wp_head_html, $view);
+        $view = str_replace('{{ WP_FOOTER }}', $wp_footer_html, $view);
+
         return $view;
     }
 
@@ -70,19 +75,23 @@ class ViewBuilder
             return $this->globalTags[$key];
         }
 
-        if (in_array($key, self::$TWO_PART_TAGS)) {
-            return $this->processed_two_part_tag($key);
-        }
-
-        return '';
-    }
-
-    private function processed_two_part_tag(string $key): string
-    {
         $parts = explode(':', $key);
         $space = trim($parts[0]);
         $tag = trim($parts[1] ?? '');
+        if (in_array($space, self::$TWO_PART_TAGS)) {
+            return $this->processed_two_part_tag($space, $tag);
+        }
 
+        return match ($space) {
+            'CSS' => $this->enqueue_style($tag),
+            'WP_HEAD' => '{{ WP_HEAD }}',
+            'WP_FOOTER' => '{{ WP_FOOTER }}',
+            default => '',
+        };
+    }
+
+    private function processed_two_part_tag(string $space, string $tag): string
+    {
         if ($tag !== 'START') return '';
 
         $startCursor = $this->cursor;
@@ -97,10 +106,10 @@ class ViewBuilder
 
             $this->cursor = $endTagPos + $length;
 
-            switch ($space) {
-                case 'POSTS': return $this->processed_posts($inbetween);
-                default: return '';
-            }
+            return match ($space) {
+                'POSTS' => $this->processed_posts($inbetween),
+                default => '',
+            };
         }
 
         return '';
@@ -141,6 +150,16 @@ class ViewBuilder
         }
 
         return $post_html;
+    }
+
+    private function enqueue_style(string $filePath): string
+    {
+        $handle = 'style-' . pathinfo($filePath, PATHINFO_FILENAME);
+        $fileUrl = THEME_RESOURCES_URI . $filePath;
+
+        wp_enqueue_style($handle, $fileUrl);
+
+        return '';
     }
 
     private function rest_of_blade(): string
