@@ -1,2 +1,2 @@
 <?php
-echo replace_keys('home.html');
+the_view('home.html');
