@@ -75,7 +75,7 @@ class ViewBuilder
             return $this->globalTags[$key];
         }
 
-        $parts = explode(':', $key);
+        $parts = explode(':', $key, 2);
         $space = trim($parts[0]);
         $tag = trim($parts[1] ?? '');
         if (in_array($space, self::$TWO_PART_TAGS)) {
@@ -84,6 +84,8 @@ class ViewBuilder
 
         return match ($space) {
             'CSS' => $this->enqueue_style($tag),
+            'CSS_REMOTE' => $this->enqueue_style_full_uri($tag),
+            'PATH' => $this->full_path($tag),
             'WP_HEAD' => '{{ WP_HEAD }}',
             'WP_FOOTER' => '{{ WP_FOOTER }}',
             default => '',
@@ -154,12 +156,30 @@ class ViewBuilder
 
     private function enqueue_style(string $filePath): string
     {
-        $handle = 'style-' . pathinfo($filePath, PATHINFO_FILENAME);
-        $fileUrl = THEME_RESOURCES_URI . $filePath;
+        return $this->enqueue_style_full_uri(THEME_RESOURCES_URI . $filePath);
+    }
 
-        wp_enqueue_style($handle, $fileUrl);
+    private function enqueue_style_full_uri(string $fullUri): string
+    {
+        $parsedPath = parse_url($fullUri, PHP_URL_PATH);
+
+        $filename = pathinfo($parsedPath, PATHINFO_FILENAME);
+        $extension = pathinfo($parsedPath, PATHINFO_EXTENSION);
+
+        if (empty($filename) || empty($extension)) {
+            $filename = md5($fullUri);
+        }
+
+        $handle = 'style-' . sanitize_title($filename);
+
+        wp_enqueue_style($handle, $fullUri);
 
         return '';
+    }
+
+    private function full_path(string $filePath): string
+    {
+        return THEME_RESOURCES_URI . $filePath;
     }
 
     private function rest_of_blade(): string
