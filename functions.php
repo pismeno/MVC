@@ -15,9 +15,18 @@ function the_view(string $bladeFilePath): void
     echo get_the_view($bladeFilePath);
 }
 
-function setup_theme()
+function init()
+{
+    register_nav_menus([
+        'header-menu' => 'Header Menu',
+        'footer-menu' => 'Footer Menu',
+    ]);
+}
+
+function post_init()
 {
     add_theme_support('post-thumbnails');
 }
 
-add_action('after_setup_theme', 'setup_theme');
+add_action('init', 'init');
+add_action('after_setup_theme', 'post_init');
