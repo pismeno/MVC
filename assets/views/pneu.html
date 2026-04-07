@@ -98,100 +98,48 @@
                     </ul>
                 </div>
             </header>
-            <div id="content">
-                <div id="centeredthings">
-                    <h2>Pneumatiky, disky, kompletní kola</h2>
-                    <h4>5000 typů skladem, doručení do 24hodin</h4>
-                    <div id="filterdiv">
-                        <div id="filtertopstripe"></div>
-                        <div id="filter">
-                            <form>
-                                <div>
-                                    <div>
-                                        <button class="selected" id="cars">Osobní, SUV, 4x4</button>
-                                        <button id="vans">Dodávky</button>
-                                        <button id="larrys">Nákladní</button>
-                                        <button id="discs">Disky</button>
-                                    </div>
-                                </div>
-                                <div></div>
-                                <div>
-                                    <div>
-                                        <select id="znacka">
-                                            <option value="" disabled selected>Značka</option>
-                                            <option value="">xxxxxxxx</option>
-                                            <option value="">xxxxxxxx</option>
-                                            <option value="">xxxxxxxx</option>
-                                        </select>
-                                        <select id="sirka">
-                                            <option value="" disabled selected>Šířka</option>
-                                            <option value="">xxxxxxxx</option>
-                                            <option value="">xxxxxxxx</option>
-                                            <option value="">xxxxxxxx</option>
-                                        </select>
-                                        <select id="profil">
-                                            <option value="" disabled selected>Profil</option>
-                                            <option value="">xxxxxxxx</option>
-                                            <option value="">xxxxxxxx</option>
-                                            <option value="">xxxxxxxx</option>
-                                        </select>
-                                        <select id="prumer">
-                                            <option value="" disabled selected>Průměr</option>
-                                            <option value="">xxxxxxxx</option>
-                                            <option value="">xxxxxxxx</option>
-                                            <option value="">xxxxxxxx</option>
-                                        </select>
-                                        <select id="sezona">
-                                            <option value="" disabled selected>Sezóna</option>
-                                            <option value="">xxxxxxxx</option>
-                                            <option value="">xxxxxxxx</option>
-                                            <option value="">xxxxxxxx</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div></div>
-                                <div>
-                                    <input type="submit" Value="Hledat">
-                                </div>
-                            </form>
+
+            <div id="content" class="single-post-page">
+                <div class="back-to-shop">
+                    <a href="/">&larr; Zpět na výpis produktů</a>
+                </div>
+
+                {{ POSTS:START }}
+                <div id="single-product">
+                    <div class="product-gallery">
+                        <div class="main-image">
+                            {{ THUMBNAIL }}
+                        </div>
+                        <div class="product-stats-vertical">
+                            <div>
+                                <span class="stat-wet">{{ FIELD:tire_wet_grip }}</span>
+                                <span class="stat-fuel">{{ FIELD:tire_fuel_efficiency }}</span>
+                                <span class="stat-noise">{{ FIELD:tire_noise_level }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-details">
+                        <h1>{{ TITLE }}</h1>
+                        <div class="specs-box">
+                            <h3>Parametry pneumatiky</h3>
+                            <ul>
+                                <li><strong>Rozměry pneu:</strong> <span>{{ FIELD:tire_dimensions }}</span></li>
+                                <li><strong>Index rychlosti:</strong> <span>{{ FIELD:tire_speed_index }}</span></li>
+                                <li><strong>Index nosnosti:</strong> <span>{{ FIELD:tire_load_index }}</span></li>
+                            </ul>
+                        </div>
+                        <div class="product-description">
+                            <h3>Popis produktu</h3>
+                            <div class="entry-content">
+                                {{ CONTENT }}
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div id="shop">
-                    <h5>Více než 2500 pneumatik v nabídce</h5>
-                    <div>
-                        {{ POSTS:START }}
-                        <div class="{{ CLASS }}">
-                            <div class="image">
-                                <a href="{{ PERMALINK }}">{{ THUMBNAIL }}</a>
-                            </div>
-                            <div class="stats">
-                                <div>
-                                    <span>{{ FIELD:tire_wet_grip }}</span>
-                                    <span>{{ FIELD:tire_fuel_efficiency }}</span>
-                                    <span>{{ FIELD:tire_noise_level }}</span>
-                                </div>
-                            </div>
-                            <div class="info">
-                                <h3><a href="{{ PERMALINK }}">{{ TITLE }}</a></h3>
-                                <div>
-                                    <p>rozměry pneu:    {{ FIELD:tire_dimensions }}</p>
-                                    <p>index rychlosti: {{ FIELD:tire_speed_index }}</p>
-                                    <p>index nosnosti:  {{ FIELD:tire_load_index }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        {{ POSTS:END }}
-                    </div>
-                </div>
-                <div id="showmore">
-                    <a href="">
-                        <div>
-                            <span>Zobrazit dalších 30 produktů</span>
-                        </div>
-                    </a>
-                </div>
+                {{ POSTS:END }}
             </div>
+
             <footer>
                 <div id="benefits">
                     <div>
