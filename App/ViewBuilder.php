@@ -1,5 +1,6 @@
 <?php
 namespace App;
+
 class ViewBuilder
 {
     private static array $TWO_PART_TAGS = ['POSTS'];
@@ -133,9 +134,14 @@ class ViewBuilder
 
     private function processed_post(string $bladeSource): string
     {
-        $post_html = $bladeSource;
+        return preg_replace_callback('/{{\s*(.*?)\s*}}/', function($matches) {
+            return $this->processed_post_key(trim($matches[1]));
+        }, $bladeSource);
+    }
 
-        $POST_KEYS = [
+    private function processed_post_key(string $key): string
+    {
+        $standard_value = match ($key) {
             'CLASS' => in_category('3') ? 'post-cat-three' : 'post',
             'TITLE' => get_the_title(),
             'PERMALINK' => get_permalink(),
@@ -143,15 +149,25 @@ class ViewBuilder
             'CONTENT' => get_the_content(),
             'TIME' => get_the_time('F jS, Y'),
             'AUTHOR_POSTS_LINK' => get_the_author_posts_link(),
-            'CATEGORIES' => get_the_category_list(', ')
-        ];
+            'CATEGORIES' => get_the_category_list(', '),
+            default => null,
+        };
 
-        foreach ($POST_KEYS as $key => $value) {
-            $pattern = '/{{\s*' . $key . '\s*}}/'; // \s* is for ignoring whitespace chars
-            $post_html = preg_replace($pattern, $value, $post_html);
+        if ($standard_value !== null) {
+            return $standard_value;
         }
 
-        return $post_html;
+        $parts = explode(':', $key, 2);
+        if (count($parts) === 2) {
+            $space = trim($parts[0]);
+            $tag = trim($parts[1]);
+
+            if ($space === 'FIELD') {
+                return (string) \get_post_meta(\get_the_ID(), $tag, true);
+            }
+        }
+
+        return '';
     }
 
     private function enqueue_style(string $filePath): string
