@@ -167,7 +167,10 @@ class ViewBuilder
         };
 
         if ($standard_value !== null) {
-            return htmlspecialchars($standard_value);
+            if ($key != 'THUMBNAIL') {
+                $standard_value = htmlspecialchars($standard_value);
+            }
+            return $standard_value;
         }
 
         $parts = explode(':', $key, 2);

@@ -22,8 +22,10 @@
                     </div>
                     <h1><a href="">shop.uvedcars.cz</a></h1>
                     <div id="contactinfozone">
+                        {{ MENU:header-contact:START }}
                         <span id="contactus" class="roboto-regular">Kontaktujte nás</span>
-                        <span id="contactnumber">+420 775 788 227</span>
+                        <span id="contactnumber">{{ TITLE }}</span>
+                        {{ MENU:header-contact:END }}
                     </div>
                     <div id="phoneicon">
                         <div></div>
@@ -32,18 +34,56 @@
                 </div>
                 <div id="menu">
                     <ul>
-                        {{ MENU:header-menu:START }}
-                        <li class="{{ CLASSES }} {{ IS_ACTIVE }}">
-                            <a href="{{ URL }}" target="{{ TARGET }}">{{ TITLE }}</a>
+                        <li>Úvodní strana
+                            <ul>
+                                {{ MENU:header-col-1:START }}
+                                <li class="{{ CLASSES }} {{ IS_ACTIVE }}"><a href="{{ URL }}" target="{{ TARGET }}">{{ TITLE }}</a></li>
+                                {{ MENU:header-col-1:END }}
+                            </ul>
                         </li>
-                        {{ MENU:header-menu:END }}
+
+                        <li>Podpora
+                            <ul>
+                                {{ MENU:header-col-2:START }}
+                                <li class="{{ CLASSES }} {{ IS_ACTIVE }}"><a href="{{ URL }}" target="{{ TARGET }}">{{ TITLE }}</a></li>
+                                {{ MENU:header-col-2:END }}
+                            </ul>
+                        </li>
+
+                        <li>Obchodní podmínky
+                            <ul>
+                                {{ MENU:header-col-3:START }}
+                                <li class="{{ CLASSES }} {{ IS_ACTIVE }}"><a href="{{ URL }}" target="{{ TARGET }}">{{ TITLE }}</a></li>
+                                {{ MENU:header-col-3:END }}
+                            </ul>
+                        </li>
+
+                        <li>Kontakt
+                            <ul>
+                                {{ MENU:header-col-4:START }}
+                                <li class="{{ CLASSES }} {{ IS_ACTIVE }}"><a href="{{ URL }}" target="{{ TARGET }}">{{ TITLE }}</a></li>
+                                {{ MENU:header-col-4:END }}
+                            </ul>
+                        </li>
+
+                        <li>Doprava
+                            <ul>
+                                {{ MENU:header-col-5:START }}
+                                <li class="{{ CLASSES }} {{ IS_ACTIVE }}"><a href="{{ URL }}" target="{{ TARGET }}">{{ TITLE }}</a></li>
+                                {{ MENU:header-col-5:END }}
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </header>
             <div id="content">
                 <div id="centeredthings">
-                    <h2>Pneumatiky, disky, kompletní kola</h2>
-                    <h4>5000 typů skladem, doručení do 24hodin</h4>
+                    {{ MENU:banner-title-1:START }}
+                    <h2>{{ TITLE }}</h2>
+                    {{ MENU:banner-title-1:END }}
+                    {{ MENU:banner-title-2:START }}
+                    <h4>{{ TITLE }}</h4>
+                    {{ MENU:banner-title-2:END }}
                     <div id="filterdiv">
                         <div id="filtertopstripe"></div>
                         <div id="filter">

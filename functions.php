@@ -18,11 +18,18 @@ function the_view(string $bladeFilePath): void
 function init()
 {
     register_nav_menus([
-        'header-menu'   => 'Header Menu',
-        'footer-menu'   => 'Footer Menu (Sloupec 1)',
-        'footer-col-2'  => 'Footer Menu (Sloupec 2 - Sídlo)',
-        'footer-col-3'  => 'Footer Menu (Sloupec 3 - Adresa)',
-        'footer-col-4'  => 'Footer Menu (Sloupec 4 - Otevírací doba)',
+        'header-contact' => 'Header Contact',
+        'header-col-1'   => 'Header Menu col 1 - Úvodní strana',
+        'header-col-2'   => 'Header Menu col 2 - Podpora',
+        'header-col-3'   => 'Header Menu col 3 - Obchodní podmínky',
+        'header-col-4'   => 'Header Menu col 4 - Kontakt',
+        'header-col-5'   => 'Header Menu col 5 - Doprava',
+        'banner-title-1' => 'Banner Title 1',
+        'banner-title-2' => 'Banner Title 2',
+        'footer-col-1'   => 'Footer Menu col 1 - Vše o nákupu',
+        'footer-col-2'  => 'Footer Menu col 2 - Sídlo',
+        'footer-col-3'  => 'Footer Menu col 3 - Adresa',
+        'footer-col-4'  => 'Footer Menu col 4 - Otevírací doba',
     ]);
 }
 
