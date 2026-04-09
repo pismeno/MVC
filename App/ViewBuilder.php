@@ -167,7 +167,7 @@ class ViewBuilder
         };
 
         if ($standard_value !== null) {
-            return $standard_value;
+            return htmlspecialchars($standard_value);
         }
 
         $parts = explode(':', $key, 2);
@@ -215,13 +215,16 @@ class ViewBuilder
 
     private function processed_menu_item_key(string $key, $item): string
     {
-        return match ($key) {
-            'URL' => $item->url,
+        $value = match ($key) {
             'TITLE' => $item->title,
-            'CLASSES' => implode(' ', $item->classes ?? []),
-            'TARGET' => $item->target ?: '_self',
-            default => '',
+            'URL' => $item->url,
+            'ATTRIBUTES' => $item->attr_title,
+            'TARGET' => $item->target,
+            'DESCRIPTION' => $item->description,
+            default => null,
         };
+
+        return htmlspecialchars($value ?? '');
     }
 
     private function enqueue_style(string $filePath): string
