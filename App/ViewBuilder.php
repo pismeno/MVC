@@ -14,7 +14,8 @@ class ViewBuilder
     public function __construct(string $bladePath)
     {
         $this->globalTags = [
-            'PAGINATION' => get_the_posts_pagination(),
+            'PAGINATION_NEXT' => get_next_posts_page_link(),
+            'PAGINATION_PREV' => get_previous_posts_page_link(),
         ];
 
         $this->bladePath = $bladePath;
