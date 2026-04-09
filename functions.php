@@ -18,8 +18,11 @@ function the_view(string $bladeFilePath): void
 function init()
 {
     register_nav_menus([
-        'header-menu' => 'Header Menu',
-        'footer-menu' => 'Footer Menu',
+        'header-menu'   => 'Header Menu',
+        'footer-menu'   => 'Footer Menu (Sloupec 1)',
+        'footer-col-2'  => 'Footer Menu (Sloupec 2 - Sídlo)',
+        'footer-col-3'  => 'Footer Menu (Sloupec 3 - Adresa)',
+        'footer-col-4'  => 'Footer Menu (Sloupec 4 - Otevírací doba)',
     ]);
 }
 

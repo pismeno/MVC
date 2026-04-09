@@ -21,29 +21,6 @@
                         <div></div>
                     </div>
                     <h1><a href="">shop.uvedcars.cz</a></h1>
-                    <div id="personalzone">
-                        <img id="searchicon" src="{{ PATH:images/cars/icons/search.png }}" alt="ikonka lupy - vyhledat">
-                        <div class="line">
-                            <div></div>
-                            <div></div>
-                        </div>
-                        <div id="cartgap"></div>
-                        <div id="cart">
-                            <div></div>
-                            <a href="" class="justlink">
-                                <div>
-                                    <div>
-                                        <span>2</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div id="loginzone">
-                            <span>0,00 Kč</span>
-                            <span class="doublelink"><a href="">Přihlášení</a> | <a href="">Registrace</a></span>
-                        </div>
-                    </div>
-
                     <div id="contactinfozone">
                         <span id="contactus" class="roboto-regular">Kontaktujte nás</span>
                         <span id="contactnumber">+420 775 788 227</span>
@@ -55,46 +32,11 @@
                 </div>
                 <div id="menu">
                     <ul>
-                        <li>Úvodní strana
-                            <ul>
-                                <li><a href="">xxxxxxxxx</a></li>
-                                <li><a href="">xxxxxxxxx</a></li>
-                                <li><a href="">xxxxxxxxx</a></li>
-                                <li><a href="">xxxxxxxxx</a></li>
-                            </ul>
+                        {{ MENU:header-menu:START }}
+                        <li class="{{ CLASSES }} {{ IS_ACTIVE }}">
+                            <a href="{{ URL }}" target="{{ TARGET }}">{{ TITLE }}</a>
                         </li>
-                        <li>Podpora
-                            <ul>
-                                <li><a href="">xxxxxxxxx</a></li>
-                                <li><a href="">xxxxxxxxx</a></li>
-                                <li><a href="">xxxxxxxxx</a></li>
-                                <li><a href="">xxxxxxxxx</a></li>
-                            </ul>
-                        </li>
-                        <li>Obchodní podmínky
-                            <ul>
-                                <li><a href="">xxxxxxxxx</a></li>
-                                <li><a href="">xxxxxxxxx</a></li>
-                                <li><a href="">xxxxxxxxx</a></li>
-                                <li><a href="">xxxxxxxxx</a></li>
-                            </ul>
-                        </li>
-                        <li>Kontakt
-                            <ul>
-                                <li><a href="">xxxxxxxxx</a></li>
-                                <li><a href="">xxxxxxxxx</a></li>
-                                <li><a href="">xxxxxxxxx</a></li>
-                                <li><a href="">xxxxxxxxx</a></li>
-                            </ul>
-                        </li>
-                        <li>Doprava
-                            <ul>
-                                <li><a href="">xxxxxxxxx</a></li>
-                                <li><a href="">xxxxxxxxx</a></li>
-                                <li><a href="">xxxxxxxxx</a></li>
-                                <li><a href="">xxxxxxxxx</a></li>
-                            </ul>
-                        </li>
+                        {{ MENU:header-menu:END }}
                     </ul>
                 </div>
             </header>
@@ -231,21 +173,11 @@
                                     <li>
                                         <h6><a href="">Vše o nákupu</a></h6>
                                     </li>
-                                    <li>
-                                        <p><a href="">Úvodní strana</a></p>
+                                    {{ MENU:footer-menu:START }}
+                                    <li class="{{ CLASSES }} {{ IS_ACTIVE }}">
+                                        <p><a href="{{ URL }}" target="{{ TARGET }}">{{ TITLE }}</a></p>
                                     </li>
-                                    <li>
-                                        <p><a href="">Podpora</a></p>
-                                    </li>
-                                    <li>
-                                        <p><a href="">Obchodní podmínky</a></p>
-                                    </li>
-                                    <li>
-                                        <p><a href="">Kontakt</a></p>
-                                    </li>
-                                    <li>
-                                        <p><a href="">Doprava</a></p>
-                                    </li>
+                                    {{ MENU:footer-menu:END }}
                                 </ul>
                             </div>
                             <div></div>
@@ -254,15 +186,11 @@
                                     <li>
                                         <h6><a href="">Sídlo společnosti</a></h6>
                                     </li>
-                                    <li>
-                                        <p>UVED Company, s.r.o.</p>
+                                    {{ MENU:footer-col-2:START }}
+                                    <li class="{{ CLASSES }} {{ IS_ACTIVE }}">
+                                        <p><a href="{{ URL }}" target="{{ TARGET }}">{{ TITLE }}</a></p>
                                     </li>
-                                    <li>
-                                        <p><a href="">Bulharská 996/20</a></p>
-                                    </li>
-                                    <li>
-                                        <p><a href="">101 00 Praha 10 - Vršovice</a></p>
-                                    </li>
+                                    {{ MENU:footer-col-2:END }}
                                 </ul>
                             </div>
                             <div>
@@ -270,15 +198,11 @@
                                     <li>
                                         <h6><a href="">Doručovací adresa</a></h6>
                                     </li>
-                                    <li>
-                                        <p>UVED Company, s.r.o.</p>
+                                    {{ MENU:footer-col-3:START }}
+                                    <li class="{{ CLASSES }} {{ IS_ACTIVE }}">
+                                        <p><a href="{{ URL }}" target="{{ TARGET }}">{{ TITLE }}</a></p>
                                     </li>
-                                    <li>
-                                        <p><a href="">Mariánské náměstí 73</a></p>
-                                    </li>
-                                    <li>
-                                        <p><a href="">686 01 Uherské Hradištět</a></p>
-                                    </li>
+                                    {{ MENU:footer-col-3:END }}
                                 </ul>
                             </div>
                             <div>
@@ -286,12 +210,11 @@
                                     <li>
                                         <h6>Otevírací doba</h6>
                                     </li>
-                                    <li>
-                                        <p>Pondělí - Pátek</p>
+                                    {{ MENU:footer-col-4:START }}
+                                    <li class="{{ CLASSES }} {{ IS_ACTIVE }}">
+                                        <p><a href="{{ URL }}" target="{{ TARGET }}">{{ TITLE }}</a></p>
                                     </li>
-                                    <li>
-                                        <p>7:00 - 19:00</p>
-                                    </li>
+                                    {{ MENU:footer-col-4:END }}
                                 </ul>
                             </div>
                         </div>

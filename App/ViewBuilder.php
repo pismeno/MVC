@@ -3,7 +3,7 @@ namespace App;
 
 class ViewBuilder
 {
-    private static array $TWO_PART_TAGS = ['POSTS'];
+    private static array $TWO_PART_TAGS = ['POSTS', 'MENU'];
 
     private string $bladePath;
     private string $blade;
@@ -95,22 +95,35 @@ class ViewBuilder
 
     private function processed_two_part_tag(string $space, string $tag): string
     {
-        if ($tag !== 'START') return '';
+        $parts = explode(':', $tag, 2);
+        $param = '';
+        $action = $tag;
+
+        if (count($parts) === 2) {
+            $param = trim($parts[0]);
+            $action = trim($parts[1]);
+        }
+
+        if ($action !== 'START') return '';
 
         $startCursor = $this->cursor;
 
-        $pattern = '/{{\s*' . $space . ':END\s*}}/';
+        if ($param) {
+            $pattern = '/{{\s*' . preg_quote($space) . ':' . preg_quote($param) . ':END\s*}}/';
+        } else {
+            $pattern = '/{{\s*' . preg_quote($space) . ':END\s*}}/';
+        }
 
-        if (preg_match($pattern, $this->blade, $matches, PREG_OFFSET_CAPTURE, $startCursor)) { // PREG_OFFSET_CAPTURE tells regex to return the string position index too
+        if (preg_match($pattern, $this->blade, $matches, PREG_OFFSET_CAPTURE, $startCursor)) {
             $endTagPos = $matches[0][1];
             $length = strlen($matches[0][0]);
 
             $inbetween = substr($this->blade, $startCursor, $endTagPos - $startCursor);
-
             $this->cursor = $endTagPos + $length;
 
             return match ($space) {
                 'POSTS' => $this->processed_posts($inbetween),
+                'MENU'  => $this->processed_menu($param, $inbetween),
                 default => '',
             };
         }
@@ -168,6 +181,47 @@ class ViewBuilder
         }
 
         return '';
+    }
+
+    private function processed_menu(string $param, string $bladeSource): string
+    {
+        $locations = get_nav_menu_locations();
+
+        if (!isset($locations[$param])) {
+            return '';
+        }
+
+        $menu = \wp_get_nav_menu_object($locations[$param]);
+        if (!$menu) return '';
+
+        $items = \wp_get_nav_menu_items($menu->term_id);
+        if (!$items) return '';
+
+        $all_items_html = '';
+
+        foreach ($items as $item) {
+            $all_items_html .= $this->processed_menu_item($bladeSource, $item);
+        }
+
+        return $all_items_html;
+    }
+
+    private function processed_menu_item(string $bladeSource, $item): string
+    {
+        return preg_replace_callback('/{{\s*(.*?)\s*}}/', function($matches) use ($item) {
+            return $this->processed_menu_item_key(trim($matches[1]), $item);
+        }, $bladeSource);
+    }
+
+    private function processed_menu_item_key(string $key, $item): string
+    {
+        return match ($key) {
+            'URL' => $item->url,
+            'TITLE' => $item->title,
+            'CLASSES' => implode(' ', $item->classes ?? []),
+            'TARGET' => $item->target ?: '_self',
+            default => '',
+        };
     }
 
     private function enqueue_style(string $filePath): string
